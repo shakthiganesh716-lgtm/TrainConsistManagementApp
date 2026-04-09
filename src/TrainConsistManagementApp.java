@@ -1,20 +1,18 @@
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        SortedSet<String> bogieIds = new TreeSet<>();
-        bogieIds.add("BG105");
-        bogieIds.add("BG101");
-        bogieIds.add("BG103");
-        bogieIds.add("BG102");
-        bogieIds.add("BG104");
-        bogieIds.add("BG101");
+        Set<String> bogies = new LinkedHashSet<>();
+        bogies.add("Sleeper");
+        bogies.add("AC Chair");
+        bogies.add("First Class");
+        bogies.add("Pantry Car");
+        bogies.add("Sleeper");
 
-        System.out.println("Sorted Unique Bogie IDs: " + bogieIds);
-        System.out.println("First Bogie: " + bogieIds.first());
-        System.out.println("Last Bogie : " + bogieIds.last());
+        System.out.println("Bogies (Insertion Order Preserved): " + bogies);
+        System.out.println("Total Bogies: " + bogies.size());
     }
 }
