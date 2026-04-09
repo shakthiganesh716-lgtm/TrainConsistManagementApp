@@ -1,28 +1,32 @@
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
+    static class Bogie {
+        String name;
+        int capacity;
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> bogies = Arrays.asList(
-            "Sleeper", "AC Chair", "First Class",
-            "Rectangular Goods", "Cylindrical Goods", "Sleeper", "AC Chair"
+        List<Bogie> bogies = Arrays.asList(
+            new Bogie("Sleeper", 72),
+            new Bogie("AC Chair", 64),
+            new Bogie("First Class", 18),
+            new Bogie("Pantry Car", 0)
         );
 
-        Map<String, List<String>> grouped = bogies.stream()
-            .collect(Collectors.groupingBy(b -> {
-                if (b.equals("Sleeper") || b.equals("AC Chair") || b.equals("First Class"))
-                    return "Passenger";
-                else
-                    return "Goods";
-            }));
+        int totalSeats = bogies.stream()
+            .mapToInt(b -> b.capacity)
+            .reduce(0, Integer::sum);
 
-        System.out.println("Grouped Bogies:");
-        for (Map.Entry<String, List<String>> entry : grouped.entrySet()) {
-            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
-        }
+        System.out.println("Bogie Seat Counts:");
+        bogies.forEach(b -> System.out.println("  " + b.name + ": " + b.capacity));
+        System.out.println("\nTotal Seats in Train: " + totalSeats);
     }
 }
