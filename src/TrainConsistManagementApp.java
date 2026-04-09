@@ -1,20 +1,23 @@
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        SortedSet<String> bogieIds = new TreeSet<>();
-        bogieIds.add("BG105");
-        bogieIds.add("BG101");
-        bogieIds.add("BG103");
-        bogieIds.add("BG102");
-        bogieIds.add("BG104");
-        bogieIds.add("BG101"); // duplicate
+        Map<String, Integer> bogieCapacity = new HashMap<>();
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 64);
+        bogieCapacity.put("First Class", 18);
+        bogieCapacity.put("Pantry Car", 0);
 
-        System.out.println("Sorted Unique Bogie IDs: " + bogieIds);
-        System.out.println("First Bogie: " + bogieIds.first());
-        System.out.println("Last Bogie : " + bogieIds.last());
+        System.out.println("Bogie Capacity Map:");
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println("  " + entry.getKey() + " -> " + entry.getValue() + " seats");
+        }
+
+        System.out.println("\nCapacity of Sleeper: " + bogieCapacity.get("Sleeper"));
+        bogieCapacity.put("Sleeper", 80);
+        System.out.println("Updated Sleeper Capacity: " + bogieCapacity.get("Sleeper"));
     }
 }
