@@ -1,28 +1,42 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            if (capacity < 0)
+                throw new IllegalArgumentException("[ERROR] Invalid capacity: " + capacity +
+                    " for bogie '" + name + "'. Capacity cannot be negative.");
+            this.name = name;
+            this.capacity = capacity;
+        }
+
+        public String toString() {
+            return name + " (capacity: " + capacity + ")";
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> bogies = new ArrayList<>();
-        for (int i = 1; i <= 1000; i++) bogies.add("Bogie" + i);
+        List<String[]> bogieData = Arrays.asList(
+            new String[]{"Sleeper", "72"},
+            new String[]{"AC Chair", "-5"},
+            new String[]{"First Class", "18"},
+            new String[]{"Pantry Car", "-1"}
+        );
 
-        long loopStart = System.nanoTime();
-        List<String> loopResult = new ArrayList<>();
-        for (String b : bogies)
-            if (b.contains("1")) loopResult.add(b);
-        long loopTime = System.nanoTime() - loopStart;
-
-        long streamStart = System.nanoTime();
-        List<String> streamResult = bogies.stream()
-            .filter(b -> b.contains("1"))
-            .collect(Collectors.toList());
-        long streamTime = System.nanoTime() - streamStart;
-
-        System.out.println("Loop   matched: " + loopResult.size() + " | Time: " + loopTime + " ns");
-        System.out.println("Stream matched: " + streamResult.size() + " | Time: " + streamTime + " ns");
-        System.out.println("\nFaster approach: " + (loopTime < streamTime ? "Loop" : "Stream"));
+        for (String[] data : bogieData) {
+            try {
+                int cap = Integer.parseInt(data[1]);
+                Bogie b = new Bogie(data[0], cap);
+                System.out.println("[SUCCESS] Added: " + b);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
