@@ -1,32 +1,23 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class TrainConsistManagementApp {
-    static class Bogie {
-        String name;
-        int capacity;
-        Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-    }
-
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<Bogie> bogies = Arrays.asList(
-            new Bogie("Sleeper", 72),
-            new Bogie("AC Chair", 64),
-            new Bogie("First Class", 18),
-            new Bogie("Pantry Car", 0)
-        );
+        List<String> trainIds = Arrays.asList("TRN001", "TRN-002", "trn003", "TRN004", "123TRN");
+        List<String> cargoCodes = Arrays.asList("CRG01", "crg02", "CRG-03", "CRG04", "CRG005X");
 
-        int totalSeats = bogies.stream()
-            .mapToInt(b -> b.capacity)
-            .reduce(0, Integer::sum);
+        Pattern trainPattern = Pattern.compile("^TRN\\d{3}$");
+        Pattern cargoPattern = Pattern.compile("^CRG\\d{2}$");
 
-        System.out.println("Bogie Seat Counts:");
-        bogies.forEach(b -> System.out.println("  " + b.name + ": " + b.capacity));
-        System.out.println("\nTotal Seats in Train: " + totalSeats);
+        System.out.println("Train ID Validation:");
+        for (String id : trainIds)
+            System.out.println("  " + id + " -> " + (trainPattern.matcher(id).matches() ? "VALID" : "INVALID"));
+
+        System.out.println("\nCargo Code Validation:");
+        for (String code : cargoCodes)
+            System.out.println("  " + code + " -> " + (cargoPattern.matcher(code).matches() ? "VALID" : "INVALID"));
     }
 }
