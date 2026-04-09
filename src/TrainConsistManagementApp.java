@@ -1,23 +1,50 @@
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
+    static class GoodsBogie {
+        String id;
+        String cargoType;
+        boolean isSealed;
+        boolean hasFireExtinguisher;
+
+        GoodsBogie(String id, String cargoType, boolean isSealed, boolean hasFireExtinguisher) {
+            this.id = id;
+            this.cargoType = cargoType;
+            this.isSealed = isSealed;
+            this.hasFireExtinguisher = hasFireExtinguisher;
+        }
+
+        boolean isCompliant() {
+            return isSealed && hasFireExtinguisher;
+        }
+
+        public String toString() {
+            return id + " [" + cargoType + "] Sealed=" + isSealed +
+                   " FireExt=" + hasFireExtinguisher +
+                   " -> " + (isCompliant() ? "COMPLIANT" : "NON-COMPLIANT");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> trainIds = Arrays.asList("TRN001", "TRN-002", "trn003", "TRN004", "123TRN");
-        List<String> cargoCodes = Arrays.asList("CRG01", "crg02", "CRG-03", "CRG04", "CRG005X");
+        List<GoodsBogie> bogies = Arrays.asList(
+            new GoodsBogie("GB001", "Coal", true, true),
+            new GoodsBogie("GB002", "Chemicals", false, true),
+            new GoodsBogie("GB003", "Grain", true, false),
+            new GoodsBogie("GB004", "Steel", true, true)
+        );
 
-        Pattern trainPattern = Pattern.compile("^TRN\\d{3}$");
-        Pattern cargoPattern = Pattern.compile("^CRG\\d{2}$");
+        System.out.println("Safety Compliance Report:");
+        bogies.forEach(b -> System.out.println("  " + b));
 
-        System.out.println("Train ID Validation:");
-        for (String id : trainIds)
-            System.out.println("  " + id + " -> " + (trainPattern.matcher(id).matches() ? "VALID" : "INVALID"));
+        List<GoodsBogie> nonCompliant = bogies.stream()
+            .filter(b -> !b.isCompliant())
+            .collect(Collectors.toList());
 
-        System.out.println("\nCargo Code Validation:");
-        for (String code : cargoCodes)
-            System.out.println("  " + code + " -> " + (cargoPattern.matcher(code).matches() ? "VALID" : "INVALID"));
+        System.out.println("\nNon-Compliant Bogies: " + nonCompliant.size());
+        nonCompliant.forEach(b -> System.out.println("  [ALERT] " + b.id + " requires attention."));
     }
 }
