@@ -1,22 +1,32 @@
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
+    static class Bogie {
+        String name;
+        int capacity;
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> bogies = Arrays.asList(
-            "Sleeper", "AC Chair", "First Class",
-            "Rectangular Goods", "Cylindrical Goods", "Pantry Car"
+        List<Bogie> bogies = Arrays.asList(
+            new Bogie("Sleeper", 72),
+            new Bogie("AC Chair", 64),
+            new Bogie("First Class", 18),
+            new Bogie("Pantry Car", 0)
         );
 
-        List<String> passengerBogies = bogies.stream()
-            .filter(b -> b.equals("Sleeper") || b.equals("AC Chair") || b.equals("First Class"))
-            .collect(Collectors.toList());
+        int totalSeats = bogies.stream()
+            .mapToInt(b -> b.capacity)
+            .reduce(0, Integer::sum);
 
-        System.out.println("All Bogies     : " + bogies);
-        System.out.println("Passenger Bogies: " + passengerBogies);
-        System.out.println("Total Passenger Bogies: " + passengerBogies.size());
+        System.out.println("Bogie Seat Counts:");
+        bogies.forEach(b -> System.out.println("  " + b.name + ": " + b.capacity));
+        System.out.println("\nTotal Seats in Train: " + totalSeats);
     }
 }
