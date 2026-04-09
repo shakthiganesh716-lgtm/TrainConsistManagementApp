@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
@@ -8,15 +9,20 @@ public class TrainConsistManagementApp {
 
         List<String> bogies = Arrays.asList(
             "Sleeper", "AC Chair", "First Class",
-            "Rectangular Goods", "Cylindrical Goods", "Pantry Car"
+            "Rectangular Goods", "Cylindrical Goods", "Sleeper", "AC Chair"
         );
 
-        List<String> passengerBogies = bogies.stream()
-            .filter(b -> b.equals("Sleeper") || b.equals("AC Chair") || b.equals("First Class"))
-            .collect(Collectors.toList());
+        Map<String, List<String>> grouped = bogies.stream()
+            .collect(Collectors.groupingBy(b -> {
+                if (b.equals("Sleeper") || b.equals("AC Chair") || b.equals("First Class"))
+                    return "Passenger";
+                else
+                    return "Goods";
+            }));
 
-        System.out.println("All Bogies     : " + bogies);
-        System.out.println("Passenger Bogies: " + passengerBogies);
-        System.out.println("Total Passenger Bogies: " + passengerBogies.size());
+        System.out.println("Grouped Bogies:");
+        for (Map.Entry<String, List<String>> entry : grouped.entrySet()) {
+            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+        }
     }
 }
