@@ -1,23 +1,14 @@
-import java.util.Arrays;
-
 public class TrainConsistManagementApp {
 
-    static void bubbleSort(int[] arr) {
-        for (int i = 0; i < arr.length-1; i++) {
-            for (int j = 0; j < arr.length-i-1; j++) {
-                if (arr[j] > arr[j+1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
-                }
-            }
+    static void reverse(String[] arr) {
+        for (int i = arr.length-1; i >= 0; i--) {
+            System.out.print(arr[i] + " ");
         }
-        System.out.println(Arrays.toString(arr));
     }
 
     public static void main(String[] args) {
-        System.out.println("=== UC16 ===");
-        int[] arr = {72, 18, 64, 40};
-        bubbleSort(arr);
+        System.out.println("=== UC17 ===");
+        String[] bogies = {"BG101","BG102","BG103"};
+        reverse(bogies);
     }
 }
