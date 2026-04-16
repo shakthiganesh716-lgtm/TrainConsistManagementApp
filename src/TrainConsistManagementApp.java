@@ -1,27 +1,23 @@
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String msg) {
-        super(msg);
-    }
-}
+import java.util.Arrays;
 
 public class TrainConsistManagementApp {
 
-    static void assignCargo(String shape, String cargo) {
-        try {
-            if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-                throw new CargoSafetyException("Unsafe cargo assignment!");
+    static void bubbleSort(int[] arr) {
+        for (int i = 0; i < arr.length-1; i++) {
+            for (int j = 0; j < arr.length-i-1; j++) {
+                if (arr[j] > arr[j+1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
             }
-            System.out.println("[SUCCESS] Cargo assigned safely.");
-        } catch (CargoSafetyException e) {
-            System.out.println("[ERROR] " + e.getMessage());
-        } finally {
-            System.out.println("[LOG] Operation completed.");
         }
+        System.out.println(Arrays.toString(arr));
     }
 
     public static void main(String[] args) {
-        System.out.println("=== UC15 ===");
-        assignCargo("Rectangular", "Petroleum");
-        assignCargo("Cylindrical", "Petroleum");
+        System.out.println("=== UC16 ===");
+        int[] arr = {72, 18, 64, 40};
+        bubbleSort(arr);
     }
 }
