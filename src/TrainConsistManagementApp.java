@@ -1,14 +1,19 @@
 public class TrainConsistManagementApp {
 
-    static void reverse(String[] arr) {
-        for (int i = arr.length-1; i >= 0; i--) {
-            System.out.print(arr[i] + " ");
+    static void linearSearch(String[] arr, String key) {
+        for (String s : arr) {
+            if (s.equals(key)) {
+                System.out.println("[FOUND] " + key);
+                return;
+            }
         }
+        System.out.println("[NOT FOUND] " + key);
     }
 
     public static void main(String[] args) {
-        System.out.println("=== UC17 ===");
-        String[] bogies = {"BG101","BG102","BG103"};
-        reverse(bogies);
+        System.out.println("=== UC18 ===");
+        String[] bogies = {"BG101","BG103","BG102"};
+        linearSearch(bogies,"BG102");
+        linearSearch(bogies,"BG999");
     }
 }
